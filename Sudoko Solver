@@ -1,0 +1,96 @@
+public class Solution {
+    public void solveSudoku(ArrayList<ArrayList<Character>> a) {
+        if(a.size()==0)
+        {
+            return ;
+        }
+        boolean b = sudoko(a,0,0);
+        if(b==true)
+        {
+            return ;
+        }
+    }
+    
+    public boolean sudoko(ArrayList<ArrayList<Character>> a,int row,int col)
+    {
+        if(row == a.size())
+        {
+            return true;
+        }
+        if(col == a.size())
+        {
+            return sudoko(a,row+1,0);
+        }
+        if(a.get(row).get(col)=='.')
+        {
+            return sudoko(a,row,col+1);
+        }
+        for(int i=1;i<=9;i++)
+        {
+            char val = (char)(i+48);
+            if(isItSafe(row,col,a,i))
+            {
+                a.get(row).set(col,val);
+                boolean res = sudoko(a,row,col+1);
+                if(res == true)
+                {
+                    return true;
+                }
+                a.get(row).set(col,'.');
+            }
+        }
+        return false;
+    }
+    public boolean isItSafe(int row,int col,ArrayList<ArrayList<Character>> a,int number)
+    {
+        if(a.get(row).get(col)!='.')
+        {
+            return false;
+        }
+        int r = row;
+        ArrayList<Character> arr = a.get(r);
+        for(int i=0;i<arr.size();i++)
+        {
+            if(arr.get(i)=='.')
+            {
+                continue;
+            }
+            else if(Character.isDigit(arr.get(i)))
+            {
+                if(number == Character.getNumericValue(arr.get(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        for(int i=0;i<a.size();i++)
+        {
+            if(Character.isDigit(a.get(i).get(col)))
+            {
+                if(number == Character.getNumericValue(a.get(i).get(col)))
+                {
+                    return false;
+                }
+            }
+        }
+        r = row - row%3;
+        int c = col - col%3;
+        
+        for(int i=r;i<r+3;i++)
+        {
+            for(int j=c;j<c+3;j++)
+            {
+                if(Character.isDigit(a.get(i).get(j)))
+                {
+                    if(number == Character.getNumericValue(a.get(i).get(j)))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+
+        
+    }
+}
