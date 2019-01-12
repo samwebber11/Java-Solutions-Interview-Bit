@@ -1,0 +1,89 @@
+public class Solution {
+    public ArrayList<ArrayList<String>> solveNQueens(int a) {
+        if(a==0)
+        {
+            return new ArrayList<>();
+        }
+        nqueens(new boolean[a][a],0,0);
+        return arr1;
+    }
+    
+    ArrayList<ArrayList<String>> arr1 = new ArrayList<>();
+    public void nqueens(boolean arr[][],int row,int col)
+    {
+        if(row == arr.length)
+        {
+            ArrayList<String> arr2 = new ArrayList<>();
+            for(int i=0;i<arr.length;i++)
+            {
+                String ans="";
+                for(int j=0;j<arr.length;j++)
+                {
+                    if(arr[i][j])
+                    {
+                        ans+='Q';
+                    }
+                    else
+                    {
+                        ans+='.';
+                    }
+                }
+                arr2.add(ans);
+            }
+            arr1.add(arr2);
+            return ;
+        }
+        for(int i=0;i<arr.length;i++)
+        {
+            if(isItSafe(row,i,arr))
+            {
+                arr[row][i] = true;
+                nqueens(arr,row+1,i);
+                arr[row][i]=false;
+            }
+        }
+        return ;
+    }
+    public boolean isItSafe(int row,int col,boolean arr[][])
+    {
+        int r = row;
+        for(int i=0;i<r;i++)
+        {
+            if(arr[i][col]==true)
+            {
+                return false;
+            }
+        }
+        int c = col;
+        for(int i=0;i<c;i++)
+        {
+            if(arr[row][i]==true)
+            {
+                return false;
+            }
+        }
+        r = row-1;
+        c = col-1;
+        while(r>=0 && c>=0)
+        {
+            if(arr[r][c]==true)
+            {
+                return false;
+            }
+            r--;
+            c--;
+        }
+        r = row-1;
+        c = col+1;
+        while(r>=0 && c<arr.length)
+        {
+            if(arr[r][c]==true)
+            {
+                return false;
+            }
+            r--;
+            c++;
+        }
+        return true;
+    }
+}
