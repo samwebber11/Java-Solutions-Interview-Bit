@@ -1,0 +1,52 @@
+public class Solution {
+    public String getPermutation(int A, int k) {
+        
+        
+        int fact = 1;
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=1;i<=A;i++)
+        {
+            list.add(i);
+            if(i==A)
+            {
+                break;
+            }
+        }
+        k--;
+        String ans = permute(list,k);
+        return ans;
+        }
+        public String permute(ArrayList<Integer> list,int k)
+        {
+        
+        int n = list.size();
+        if(n==0)
+        {
+            return "";
+        }
+        String ans = "";
+        int fact = get_fact(n-1);
+        ans+=list.get(k/fact);
+        list.remove(k/fact);
+        k = k%fact;
+        ans+=permute(list,k);
+        return ans;
+        }
+        public int get_fact(int n)
+        {
+            if(n==0 || n==1)
+            {
+                return 1;
+            }
+            if(n>12)
+            {
+                return Integer.MAX_VALUE;
+            }
+            int fact=1;
+            for(int i=2;i<=n;i++)
+            {
+                fact=fact*i;
+            }
+            return fact;
+        }
+}
