@@ -1,0 +1,66 @@
+public class Solution {
+    public ArrayList<ArrayList<String>> partition(String a) {
+        ArrayList<ArrayList<String>> str =new ArrayList<>();
+        if(a.length()==0)
+        {
+            return str;
+        }
+        palindrome(a,new ArrayList<>(),str);
+        return str;
+    }
+    
+    
+    public void palindrome(String s,ArrayList<String> arr,ArrayList<ArrayList<String>> list)
+    {
+        if(s.length()==0)
+        {
+            list.add(new ArrayList<>(arr));
+            return ;
+        }
+        for(int i=1;i<=s.length();i++)
+        {
+            String check = s.substring(0,i);
+            String roq = s.substring(i);
+            if(isPalin(check))
+            {
+                arr.add(check);
+                palindrome(roq,arr,list);
+                arr.remove(arr.size()-1);
+            }
+        }
+    }
+    public boolean isPalin(String s)
+    {
+        int middle = s.length()/2;
+        if(s.length()%2==0)
+        {
+            middle--;
+            for(int i=0;i<middle+1;i++)
+            {
+                if(s.charAt(i)==s.charAt(s.length()-i-1))
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            for(int i=0;i<middle;i++)
+            {
+                 if(s.charAt(i)==s.charAt(s.length()-i-1))
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
