@@ -1,0 +1,32 @@
+public class Solution {
+    public ArrayList<String> generateParenthesis(int A) {
+        if(A==0)
+        {
+            return new ArrayList<>();
+        }
+        generate(A,"",0,0);
+        return arr;
+    }
+    
+    ArrayList<String> arr= new ArrayList<>();
+    public void generate(int n,String ans,int open,int close)
+    {
+        if(ans.length()==2*n)
+        {
+            arr.add(ans);
+            return ;
+        }
+        if(open<n)
+        {
+            generate(n,ans+'(',open+1,close);
+        }
+        if(open>close)
+        {
+            generate(n,ans+')',open,close+1);
+        }
+        return ;
+        
+        
+        
+    }
+}
