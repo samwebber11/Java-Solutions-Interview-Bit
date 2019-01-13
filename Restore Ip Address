@@ -1,0 +1,58 @@
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        if(s.length()==0)
+        {
+            return new ArrayList<>();
+        }
+        else
+        {
+            if(s.length()<4)
+            {
+                return new ArrayList<>();
+            }
+            int strings[]=new int[4];
+            List<String> list = new ArrayList<>();
+            restore(s,list,strings,0,0);
+            return list;
+        }
+    }
+    
+    public void restore(String s,List<String> list,int segment[],int start,int counter)
+    {
+        if(counter == 4 && start == s.length())
+        {
+            String ans="";
+            for(int i=0;i<4;i++)
+            {
+                if(i==3)
+                {
+                    ans+=segment[i]+"";
+                    break;
+                }
+                ans+=segment[i]+""+'.';
+            }
+            list.add(ans);
+            return ;
+        }
+        if(counter==4 || start == s.length())
+        {
+            return ;
+        }
+        
+        for(int i=1;i<=3&& i+start<=s.length();i++)
+        {
+            String str = s.substring(start,i+start);
+            int val = Integer.parseInt(str);
+            if(val>255 || (i>=2 && s.charAt(start)=='0'))
+            {
+                break;
+            }
+            segment[counter] = val;    
+            restore(s,list,segment,start+i,counter+1);
+            segment[counter] = -1;
+        }
+        
+        
+        
+    }
+}
